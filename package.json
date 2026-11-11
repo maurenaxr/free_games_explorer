@@ -1,0 +1,19 @@
+{
+  "name": "free-games-explorer",
+  "version": "1.0.0",
+  "description": "Web application for discovering free-to-play games using the FreeToGame API (Express, Axios, EJS)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
+  "keywords": ["express", "axios", "ejs", "freetogame", "api"],
+  "author": "Bakhytzhan Amina",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}
