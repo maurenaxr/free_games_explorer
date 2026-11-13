@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+
+<p><a href="javascript:history.back()">&laquo; Back to results</a></p>
+
+<article class="details">
+  <div class="details-head">
+    <img src="<%= game.thumbnail %>" alt="Thumbnail of <%= game.title %>">
+    <div>
+      <h1><%= game.title %></h1>
+      <div class="tags">
+        <span class="tag"><%= game.genre %></span>
+        <span class="tag tag-alt"><%= game.platform %></span>
+        <span class="tag"><%= game.status %></span>
+      </div>
+      <p class="muted"><%= game.shortDescription %></p>
+      <% if (game.gameUrl) { %>
+        <a class="button" href="<%= game.gameUrl %>" target="_blank" rel="noopener noreferrer">Play for free</a>
+      <% } %>
+    </div>
+  </div>
+
+  <h2>About</h2>
+  <p class="description"><%= game.description %></p>
+
+  <h2>Information</h2>
+  <dl class="info">
+    <dt>Developer</dt><dd><%= game.developer %></dd>
+    <dt>Publisher</dt><dd><%= game.publisher %></dd>
+    <dt>Release date</dt><dd><%= game.releaseDateFormatted %></dd>
+    <dt>Genre</dt><dd><%= game.genre %></dd>
+    <dt>Platform</dt><dd><%= game.platform %></dd>
+  </dl>
+
+  <%# Minimum system requirements exist only for some games (mostly PC games) %>
+  <% if (game.requirements) { %>
+    <h2>Minimum system requirements</h2>
+    <dl class="info">
+      <% if (game.requirements.os) { %><dt>OS</dt><dd><%= game.requirements.os %></dd><% } %>
+      <% if (game.requirements.processor) { %><dt>Processor</dt><dd><%= game.requirements.processor %></dd><% } %>
+      <% if (game.requirements.memory) { %><dt>Memory</dt><dd><%= game.requirements.memory %></dd><% } %>
+      <% if (game.requirements.graphics) { %><dt>Graphics</dt><dd><%= game.requirements.graphics %></dd><% } %>
+      <% if (game.requirements.storage) { %><dt>Storage</dt><dd><%= game.requirements.storage %></dd><% } %>
+    </dl>
+  <% } %>
+
+  <%# Screenshots gallery (loop) %>
+  <% if (game.screenshots.length > 0) { %>
+    <h2>Screenshots</h2>
+    <div class="screenshots">
+      <% game.screenshots.forEach(function (url, index) { %>
+        <img src="<%= url %>" alt="<%= game.title %> screenshot <%= index + 1 %>" loading="lazy">
+      <% }); %>
+    </div>
+  <% } %>
+</article>
+
+<%- include('partials/footer') %>

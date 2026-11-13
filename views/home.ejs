@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <h1>Find your next free game</h1>
+  <p>Browse free-to-play PC and browser games by category, platform or title.</p>
+
+  <!-- Search form: sends GET /search?q=... (validated on the server) -->
+  <form class="hero-search" action="/search" method="get">
+    <label for="hero-q">Game title</label>
+    <div class="row">
+      <input id="hero-q" type="text" name="q" placeholder="For example: Overwatch" maxlength="50" required>
+      <button type="submit">Search</button>
+    </div>
+    <small>Letters, numbers and spaces only, up to 50 characters.</small>
+  </form>
+</section>
+
+<section>
+  <h2>Browse by category</h2>
+  <div class="chips">
+    <% categories.forEach(function (category) { %>
+      <a class="chip" href="/games?category=<%= category.value %>"><%= category.label %></a>
+    <% }); %>
+  </div>
+</section>
+
+<section>
+  <h2>Popular right now</h2>
+
+  <% if (warning) { %>
+    <div class="alert alert-warning"><%= warning %></div>
+  <% } %>
+
+  <% if (featured.length > 0) { %>
+    <div class="grid">
+      <% featured.forEach(function (game) { %>
+        <%- include('partials/gameCard', { game: game }) %>
+      <% }); %>
+    </div>
+    <p class="center"><a class="button" href="/games">See all games</a></p>
+  <% } else if (!warning) { %>
+    <p class="empty">No games to show yet.</p>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>Free Games Explorer</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Shared header with navigation and a quick search form (used on every page) -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/">Free Games Explorer</a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/games">All games</a>
+        <a href="/games?platform=browser">Browser games</a>
+      </nav>
+
+      <form class="nav-search" action="/search" method="get" role="search">
+        <label for="nav-q" class="visually-hidden">Search games by title</label>
+        <input id="nav-q" type="text" name="q" placeholder="Search by title..." maxlength="50" required>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="container">

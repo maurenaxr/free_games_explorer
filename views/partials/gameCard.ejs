@@ -1,0 +1,15 @@
+<%# One game card. Expects a variable called "game". Used inside loops in home.ejs and games.ejs. %>
+<article class="card">
+  <a class="card-link" href="/game/<%= game.id %>">
+    <img src="<%= game.thumbnail %>" alt="Thumbnail of <%= game.title %>" loading="lazy">
+    <div class="card-body">
+      <h3><%= game.title %></h3>
+      <p class="card-desc"><%= game.shortDescription %></p>
+      <div class="tags">
+        <span class="tag"><%= game.genre %></span>
+        <span class="tag tag-alt"><%= game.platform %></span>
+      </div>
+      <p class="card-date">Released: <%= game.releaseDateFormatted %></p>
+    </div>
+  </a>
+</article>

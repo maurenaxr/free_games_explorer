@@ -1,0 +1,90 @@
+<%- include('partials/header') %>
+
+<h1><%= filters.q ? 'Results for "' + filters.q + '"' : 'Browse games' %></h1>
+
+<!-- Filter form: sends GET /games?category=...&platform=...&sort=...&q=... -->
+<form class="filters" action="/games" method="get">
+  <div class="field">
+    <label for="q">Title contains</label>
+    <input id="q" type="text" name="q" value="<%= filters.q %>" placeholder="Optional" maxlength="50">
+  </div>
+
+  <div class="field">
+    <label for="category">Category</label>
+    <select id="category" name="category">
+      <option value="">All categories</option>
+      <% categories.forEach(function (c) { %>
+        <option value="<%= c.value %>" <%= filters.category === c.value ? 'selected' : '' %>><%= c.label %></option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="platform">Platform</label>
+    <select id="platform" name="platform">
+      <% platforms.forEach(function (p) { %>
+        <option value="<%= p.value %>" <%= filters.platform === p.value ? 'selected' : '' %>><%= p.label %></option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="sort">Sort by</label>
+    <select id="sort" name="sort">
+      <% sortOptions.forEach(function (s) { %>
+        <option value="<%= s.value %>" <%= filters.sort === s.value ? 'selected' : '' %>><%= s.label %></option>
+      <% }); %>
+    </select>
+  </div>
+
+  <button type="submit">Apply filters</button>
+</form>
+
+<%# Validation errors (shown when the server rejected the input) %>
+<% if (errors.length > 0) { %>
+  <div class="alert alert-error" role="alert">
+    <strong>Please fix the following:</strong>
+    <ul>
+      <% errors.forEach(function (message) { %>
+        <li><%= message %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } else if (games.length === 0) { %>
+  <%# "No results" state %>
+  <div class="empty">
+    <h2>No games found</h2>
+    <p>Try a different title, category or platform.</p>
+    <a class="button" href="/games">Show all games</a>
+  </div>
+<% } else { %>
+
+  <!-- Calculated statistics -->
+  <section class="stats">
+    <div><strong><%= stats.total %></strong><span>games found</span></div>
+    <div><strong><%= stats.publishers %></strong><span>publishers</span></div>
+    <div><strong><%= stats.newest %></strong><span>newest release</span></div>
+    <div><strong><%= stats.oldest %></strong><span>oldest release</span></div>
+  </section>
+
+  <div class="grid">
+    <% games.forEach(function (game) { %>
+      <%- include('partials/gameCard', { game: game }) %>
+    <% }); %>
+  </div>
+
+  <% if (pagination && pagination.totalPages > 1) { %>
+    <nav class="pagination" aria-label="Pages">
+      <% if (pagination.prevUrl) { %>
+        <a class="button" href="<%= pagination.prevUrl %>">&laquo; Previous</a>
+      <% } %>
+      <span>Page <%= pagination.page %> of <%= pagination.totalPages %></span>
+      <% if (pagination.nextUrl) { %>
+        <a class="button" href="<%= pagination.nextUrl %>">Next &raquo;</a>
+      <% } %>
+    </nav>
+  <% } %>
+
+<% } %>
+
+<%- include('partials/footer') %>
